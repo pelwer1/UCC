@@ -184,6 +184,28 @@ on('ready', function() {
       regexp = /(iron jaw|endurance)/i;
       if (regexp.test(compendData)) {        ironJaw = '1';      }
     
+      // Pinnacle folks said they do not plan to fill in InitEdges 
+      // in the Official Character Sheet for Compendium creatures 
+      var initEdges = '0,'
+      if (/Quick/.test(compendData)) {
+         initEdges = initEdges + 'Qui,';
+      }
+      if (/Improved Level Head/.test(compendData)) {
+         initEdges = initEdges + 'ILH,';
+      }
+      if (/Level Head/.test(compendData)) {
+         initEdges = initEdges + 'LH,';
+      }
+      if (/Tactician/.test(compendData)) {
+         initEdges = initEdges + 'TT,';
+      }
+      if (/Master Tactician/.test(compendData)) {
+         initEdges = initEdges + 'MTT,';
+      }
+      if (/(Mighty Blow|Dead Shot)/.test(compendData)) {
+         initEdges = initEdges + 'WCE,';
+      }
+       
       //  AGI, SMA, SPI, STR, VIG  (see vigor_rank attribute for example)
       var AGI = getAttrByName(c.id, "agility_rank");
       var SMA = getAttrByName(c.id, "smarts_rank");
@@ -267,7 +289,8 @@ on('ready', function() {
       AddAttribute('STL', stealth, charid);   // Stealth
       AddAttribute('CBR', cbtReflex, charid);
       AddAttribute('IRJ', ironJaw, charid);
-      
+      AddAttribute('InitEdges', initEdges, charid);
+    
       // token name PPT(A)
       var pace = 0;
       var parry = 0;
