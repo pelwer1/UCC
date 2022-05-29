@@ -45,9 +45,10 @@ on('ready', function() {
     function AddAttribute(attr, value, charID) {
        if (value === undefined) {
           log(attr + " has returned an undefined value.");
-          sendChat("Error on " + attr + " attribute", "This attribute has been ignored.");
+          sendChat("","Error on " + attr + " attribute", "This attribute has been ignored.");
        }
-       else {
+       // only convert a compendium creature once
+       else if (!getAttrByName(charID, "AGI")) { 
           createObj("attribute", {
              name: attr,
              current: value,
@@ -55,6 +56,9 @@ on('ready', function() {
           });
           //use the line below for diagnostics!
           // sendChat("", "Attribute: Value = " + attr + ": " + value);
+       }
+       else {
+         sendChat("","Error: Attribute: "+attr+" already exists and remains unchanged. This creature was preivously updated with !ucc.");
        }
        return;
     }
